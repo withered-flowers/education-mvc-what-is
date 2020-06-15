@@ -80,7 +80,7 @@ dengan cara konvensional, oop, dan mvc yah !
 
 Code 01:
 ```javascript
-// File index.js
+// ---------- File: index.js
 const fs = require('fs');
 const argvInput = Number(process.argv[2]);
 
@@ -111,6 +111,7 @@ else {
 
   console.log("data berhasil ditulis ke file 'output.json'");
 }
+// ---------- End of File: index.js
 ```
 
 Dapat dilihat dari kode di atas, apabila membuat semuanya menjadi satu file,
@@ -123,7 +124,7 @@ selanjutnya kita akan membuat kode di atas dengan *ala* OOP dan functional.
 
 Code 02:
 ```javascript
-// File: models/Anime.js
+// ---------- File: models/Anime.js
 class Anime {
   constructor(id, season, name, total_episodes, studio) {
     this.id = id;
@@ -135,8 +136,9 @@ class Anime {
 }
 
 module.exports = Anime;
+// ---------- End of File: models/Anime.js
 
-// File: index.js
+// ---------- File: index.js
 const fs = require('fs');
 const Anime = require('./models/Anime.js');
 
@@ -180,6 +182,7 @@ else {
 
   console.log("data berhasil ditulis ke file 'output.json'");
 }
+// ---------- End of File: index.js
 ```
 
 Sudah terlihat bukan ke-OOP-an dari kode di atas?
@@ -191,7 +194,7 @@ function utama untuk membaca dan menulis filenya !
 
 Code 03:
 ```javascript
-// File: class/Anime.js
+// ---------- File: class/Anime.js
 class Anime {
   constructor(id, season, name, total_episodes, studio) {
     this.id = id;
@@ -203,8 +206,9 @@ class Anime {
 }
 
 module.exports = Anime;
+// ---------- End of File: class/Anime.js
 
-// File: index.js
+// ---------- File: index.js
 const fs = require('fs');
 const Anime = require('./models/Anime.js');
 
@@ -264,6 +268,7 @@ const selectFile = (input) => {
 
 // Main Code
 selectFile(argvInput);
+// ---------- End of File: index.js
 ```
 
 Nah, setelah kita berhasil membuatnya sampai dengan tahap ini, maka selanjutnya
@@ -278,12 +283,13 @@ Dengan asumsi controller kita bernama `AnimeController`, maka:
 
 Code 04:
 ```javascript
-// File: index.js
+// ---------- File: index.js
 const AnimeController = require('./controllers/AnimeController.js');
 
 const argvInput = Number(process.argv[2]);
 
 AnimeController.processInput(argvInput);
+// ---------- End of File: index.js
 ```
 
 Setelah itu, kita akan membuat file `AnimeController.js` nya
@@ -298,7 +304,7 @@ Dengan asumsi nama `Model` yang sudah dibuat ini adalah `Anime`, maka
 
 Code 05:
 ```javascript
-// File: controllers/AnimeController.js
+// ---------- File: controllers/AnimeController.js
 // Jangan lupa panggil model di dalam controller
 const Anime = require('../models/Anime.js');
 
@@ -312,12 +318,13 @@ class AnimeController {
 
 // Jangan lupa export
 module.exports = AnimeController;
+// ---------- End of File: controllers/AnimeController.js
 ```
 
 Kemudian pada file model bernama `Anime` nya yang dibuat adalah:
 Code 06:
 ```javascript
-// File: models/Anime.js
+// ---------- File: models/Anime.js
 const fs = require('fs');
 
 class Anime {
@@ -385,6 +392,7 @@ class Anime {
 }
 
 module.exports = Anime;
+// End of File: models/Anime.js
 ```
 
 Barulah setelah ini kita memodifikasi file `Controller`nya lagi sehingga
@@ -394,7 +402,7 @@ Asumsi nama `View`-nya adalah `AnimeView.js`
 
 Code 07:
 ```javascript
-// File: controllers/AnimeController.js
+// ---------- File: controllers/AnimeController.js
 // Jangan lupa panggil model di dalam controller
 const Anime = require('../models/Anime.js');
 const AnimeView = require('../views/AnimeView.js');
@@ -421,11 +429,12 @@ class AnimeController {
 
 // Jangan lupa export
 module.exports = AnimeController;
+// End of File: controllers/AnimeController.js
 ```
 
 Code 08:
 ```Javascript
-// Files: views/AnimeView.js
+// ---------- File: views/AnimeView.js
 class AnimeView {
   static showError(output) {
     // Tidak usah ditambahkan tulisan error lagi karena 
@@ -439,10 +448,11 @@ class AnimeView {
 }
 
 module.exports = AnimeView;
+// ---------- End of File: views/AnimeView.js
 ```
 
-Selamat !  
-Sampai di titik ini artinya kita sudah berhasil menguasai penggunaan MVC loh !
+🔥 Selamat ! 🔥  
+Sampai di titik ini artinya kita sudah berhasil menguasai penggunaan MVC loh 😊
 
 ## Pros and Cons
 Pros:
@@ -466,5 +476,5 @@ Cons:
   ke komponen lainnya
 
 ## References
-* [Top 31 MVC Interview & Questions, Guru 99](#https://www.guru99.com/mvc-interview-questions.html)
-* [Why MVC, Medium](#https://medium.com/@socraticsol/why-mvc-architecture-e833e28e0c76)
+* [Top 31 MVC Interview & Questions, Guru 99](https://www.guru99.com/mvc-interview-questions.html)
+* [Why MVC, Medium](https://medium.com/@socraticsol/why-mvc-architecture-e833e28e0c76)
