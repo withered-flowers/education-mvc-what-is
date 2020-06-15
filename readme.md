@@ -1,9 +1,9 @@
 ## Table of Content
 1. [Prelude MVC](#prelude-mvc)
 1. [MVC What is](#mvc-what-is)
-  * [Model](#model)
-  * [View](#view)
-  * [Controller](#controller)
+    * [Model](#model)
+    * [View](#view)
+    * [Controller](#controller)
 1. [Flow in MVC](#flow-in-mvc)
 1. [MVC How To](#mvc-how-to)
 1. [Pros and Cons](#pros-and-cons)
@@ -78,7 +78,7 @@ dengan cara konvensional, oop, dan mvc yah !
 
 ### Konvensional
 
-Code 01:
+#### Code 01:
 ```javascript
 // ---------- File: index.js
 const fs = require('fs');
@@ -122,7 +122,7 @@ selanjutnya kita akan membuat kode di atas dengan *ala* OOP dan functional.
 
 ### OOP
 
-Code 02:
+#### Code 02:
 ```javascript
 // ---------- File: models/Anime.js
 class Anime {
@@ -192,7 +192,7 @@ sama sekali yah....
 Mari kita mengubah logic pada `index.js` di atas sehingga memiliki sebuah
 function utama untuk membaca dan menulis filenya !
 
-Code 03:
+#### Code 03:
 ```javascript
 // ---------- File: class/Anime.js
 class Anime {
@@ -281,7 +281,7 @@ ke `Controller`.
 
 Dengan asumsi controller kita bernama `AnimeController`, maka:
 
-Code 04:
+#### Code 04:
 ```javascript
 // ---------- File: index.js
 const AnimeController = require('./controllers/AnimeController.js');
@@ -302,7 +302,7 @@ saja yang akan dipanggil langsung, oleh karena itu jangan lupa `static` yah !
 
 Dengan asumsi nama `Model` yang sudah dibuat ini adalah `Anime`, maka
 
-Code 05:
+#### Code 05:
 ```javascript
 // ---------- File: controllers/AnimeController.js
 // Jangan lupa panggil model di dalam controller
@@ -322,7 +322,8 @@ module.exports = AnimeController;
 ```
 
 Kemudian pada file model bernama `Anime` nya yang dibuat adalah:
-Code 06:
+
+#### Code 06:
 ```javascript
 // ---------- File: models/Anime.js
 const fs = require('fs');
@@ -400,7 +401,7 @@ mau menerima output dari `Model` dan mengirimkannya ke `View`
 
 Asumsi nama `View`-nya adalah `AnimeView.js`
 
-Code 07:
+#### Code 07:
 ```javascript
 // ---------- File: controllers/AnimeController.js
 // Jangan lupa panggil model di dalam controller
@@ -432,7 +433,7 @@ module.exports = AnimeController;
 // End of File: controllers/AnimeController.js
 ```
 
-Code 08:
+#### Code 08:
 ```Javascript
 // ---------- File: views/AnimeView.js
 class AnimeView {
