@@ -61,6 +61,12 @@ Sehingga dari sini bisa diketahui bahwa `processor` nya si MVC ini adalah pada?
 * [ ] View
 * [x] Controller
 
+WARNING:  
+Dikarenakan `Controller` ini bertindak sebagai `processor`, maka 
+**seluruh** interaksi dari aplikasi kita akan terpusat pada `Controller`,
+sehingga tidak boleh ada direct access `View` atau `Model` pada app yang 
+dibuat.
+
 ## MVC How To
 Jadi, sekarang kita akan mencoba untuk membuat sebuah aplikasi sederhana untuk
 membaca season anime yang sedang tayang saat ini yah !
