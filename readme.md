@@ -456,6 +456,10 @@ module.exports = AnimeView;
 Sampai di titik ini artinya kita sudah berhasil menguasai penggunaan MVC loh 😊
 
 ## Pros and Cons
+Nah setelah kita mempelajari cara membuat MVC, 
+sekarang kita bisa mencoba untuk menganalisis kekuatan dan kelemahan dari MVC
+ini yah !
+
 Pros:
 * Bisa dikembangkan bersama - Satu orang handle view, satu orang handle 
   controller, satu orang handle model, satu orang handle main? BISA !
@@ -475,6 +479,10 @@ nya juga.
 Cons:
 * Navigasi kode jadi membingungkan karena banyaknya passing antar komponen satu
   ke komponen lainnya
+
+Dan dengan menganalisis Pros dan Cons nya, selesai juga pelajaran MVC ini.
+
+Keep humble and happy learning !
 
 ## References
 * [Top 31 MVC Interview & Questions, Guru 99](https://www.guru99.com/mvc-interview-questions.html)
