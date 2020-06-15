@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "season": "Winter 2020",
+    "name": "Itai no wa Iya nano de Bougyoryoku ni Kyokufuri Shitai to Omoimasu.",
+    "total_episodes": 12,
+    "studio": "Silver Link." 
+  },
+  {
+    "id": 2,
+    "season": "Winter 2020",
+    "name": "Plunderer",
+    "total_episodes": 24,
+    "studio": "GEEKTOYS"
+  },
+  {
+    "id": 3,
+    "season": "Winter 2020",
+    "name": "Nekopara",
+    "total_episodes": 12,
+    "studio": "Felix Film"
+  },
+  {
+    "id": 4,
+    "season": "Winter 2020",
+    "name": "Hachi-nan tte, Sore wa Nai deshou!",
+    "total_episodes": 12,
+    "studio": "Shin-Ei Animation"
+  },
+  {
+    "id": 5,
+    "season": "Summer 2020",
+    "name": "The God of High School",
+    "total_episodes": "unknown",
+    "studio": "MAPPA"
+  },
+  {
+    "id": 6,
+    "season": "Summer 2020",
+    "name": "Deca-Dence",
+    "total_episodes": "unknown",
+    "studio": "Nut"
+  }
+]
