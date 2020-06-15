@@ -57,9 +57,9 @@ Umumnya alur dalam MVC ini adalah:
    `view` agar dapat ditampilkan kepada user.
 
 Sehingga dari sini bisa diketahui bahwa `processor` nya si MVC ini adalah pada?
-* [x] Model
-* [x] View
-* [v] Controller
+* [ ] Model
+* [ ] View
+* [x] Controller
 
 ## MVC How To
 Jadi, sekarang kita akan mencoba untuk membuat sebuah aplikasi sederhana untuk
