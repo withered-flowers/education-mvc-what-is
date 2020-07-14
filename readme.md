@@ -367,10 +367,10 @@ class Anime {
     let data = this.bacaFile();
 
     if (input > data.length) {
-      return new Error("id terlalu besar !");
+      return "id terlalu besar !";
     }
     else if (input < 0 || isNaN(input)) {
-      return new Error("id terlalu kecil !");
+      return "id terlalu kecil !";
     }
     else {
       let animes = [];
@@ -423,14 +423,10 @@ class AnimeController {
 // Kemudian akan dilempar ke View untuk dijadikan output kepada user ! 
     let result = Anime.selectFile(input);
     
-    // Kalau hasilnya adalah error
-    if(result instanceof Error) {
-      AnimeView.showError(result);
-    }
-    // Kalau hasilnya bukan error
-    else {
-      AnimeView.showSuccess(result);
-    }
+    // Nah pada saat ini, kita tidak bisa memilih 
+    // apakah error, atau success ?
+    // sehingga kita hanya menggunakan showSuccess saja
+    AnimeView.showSuccess(result);
   }
 }
 
@@ -444,9 +440,7 @@ module.exports = AnimeController;
 // ---------- File: views/AnimeView.js
 class AnimeView {
   static showError(output) {
-    // Tidak usah ditambahkan tulisan error lagi karena 
-    // Error pasti ada tulisan "Error:" di depannya
-    console.log(`${output}`);
+    console.log(`Error: ${output}`);
   }
 
   static showSuccess(output) {

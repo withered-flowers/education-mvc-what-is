@@ -1,8 +1,6 @@
 class AnimeView {
   static showError(output) {
-    // Tidak usah ditambahkan tulisan error lagi karena 
-    // Error pasti ada tulisan "Error:" di depannya
-    console.log(`${output}`);
+    console.log(`Error: ${output}`);
   }
 
   static showSuccess(output) {

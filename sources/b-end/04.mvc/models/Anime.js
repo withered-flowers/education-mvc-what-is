@@ -33,10 +33,10 @@ class Anime {
     let data = this.bacaFile();
 
     if (input > data.length) {
-      return new Error("id terlalu besar !");
+      return "id terlalu besar !";
     }
     else if (input < 0 || isNaN(input)) {
-      return new Error("id terlalu kecil !");
+      return "id terlalu kecil !";
     }
     else {
       let animes = [];

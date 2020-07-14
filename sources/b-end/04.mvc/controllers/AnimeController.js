@@ -11,14 +11,10 @@ class AnimeController {
 // Kemudian akan dilempar ke View untuk dijadikan output kepada user ! 
     let result = Anime.selectFile(input);
     
-    // Kalau hasilnya adalah error
-    if(result instanceof Error) {
-      AnimeView.showError(result);
-    }
-    // Kalau hasilnya bukan error
-    else {
-      AnimeView.showSuccess(result);
-    }
+    // Nah pada saat ini, kita tidak bisa memilih 
+    // apakah error, atau success ?
+    // sehingga kita hanya menggunakan showSuccess saja
+    AnimeView.showSuccess(result);
   }
 }
 
