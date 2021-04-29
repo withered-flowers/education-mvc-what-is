@@ -311,6 +311,8 @@ module.exports = Model;
 Barulah setelah ini kita memodifikasi file `Controller`nya lagi sehingga
 mau menerima output dari `Model` dan mengirimkannya ke `View`
 
+Sampai di langkah ini kita akan membuat `view.js` dan menyelesaikan `controller.js` nya
+
 ### Code
 ```javascript
 // ---------- File: controllers/controller.js
@@ -345,7 +347,7 @@ module.exports = Controller;
 // ---------- End of File: controllers/controller.js
 ```
 
-Asumsi nama `View`-nya adalah `View.js`
+Asumsi nama `View`-nya adalah `view.js`
 
 #### Code:
 ```Javascript
@@ -362,6 +364,27 @@ class View {
 
 module.exports = View;
 // ---------- End of File: views/view.js
+```
+
+Setelah ini kita akan menyelesaikan `index.js` sehingga menjadi:
+
+### Code
+```javascript
+// ---------- File: index.js
+const Controller = require('./controllers/controller.js');
+
+const argv = process.argv;
+
+const command = argv[2];
+const argvInput = Number(process.argv[3]);
+
+if (command === 'search') {
+  Controller.searchHandler(argvInput);
+}
+else {
+  Controller.notImplementedHandler();
+}
+// ---------- End of File: index.js
 ```
 
 🔥 Selamat ! 🔥  
