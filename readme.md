@@ -79,56 +79,11 @@ Requirement dari aplikasi ini adalah:
   anime yang dipilih oleh `user` saja
 * aplikasi akan memberikan respon berhasil atau gagal menulis.
 
-kita akan mencoba untuk membuatnya
-dengan cara konvensional, oop, dan mvc yah !
-
-### Konvensional
-
-#### Code 01:
-```javascript
-// ---------- File: index.js
-const fs = require('fs');
-const argvInput = Number(process.argv[2]);
-
-let animes = [];
-
-let data = fs.readFileSync('./data/Anime.json', {
-  encoding: 'utf8'
-});
-
-data = JSON.parse(data);
-
-if (argvInput > data.length) {
-  console.log("id terlalu besar !");
-}
-else if (argvInput < 0 || isNaN(argvInput)) {
-  console.log("id terlalu kecil !");
-}
-else {
-  for (let ctr = 0; ctr < data.length; ctr++) {
-    if(data[ctr].id === argvInput) {
-      animes.push(data[ctr]);
-    }
-  };
-
-  fs.writeFileSync('./data/ouput.json', JSON.stringify(animes, null, 2), {
-    encoding: 'utf8'
-  });
-
-  console.log("data berhasil ditulis ke file 'output.json'");
-}
-// ---------- End of File: index.js
-```
-
-Dapat dilihat dari kode di atas, apabila membuat semuanya menjadi satu file,
-semuanya terkesan mudah bukan?
-
-Sampai dengan negara api bernama `OOP` yang menyerang. Oleh karena itu, 
-selanjutnya kita akan membuat kode di atas dengan *ala* OOP dan functional.
+kita akan mencoba untuk membuatnya dengan cara oop dan mvc yah !
 
 ### OOP
 
-#### Code 02:
+#### Code
 ```javascript
 // ---------- File: models/Anime.js
 class Anime {
@@ -148,46 +103,55 @@ module.exports = Anime;
 const fs = require('fs');
 const Anime = require('./models/Anime.js');
 
-const argvInput = Number(process.argv[2]);
+const argv = process.argv;
 
-let animes = [];
+const command = argv[2];
+const argvInput = Number(process.argv[3]);
 
-// Baca File
-let data = fs.readFileSync('./data/Anime.json', {
-  encoding: 'utf8'
-});
+if (command === 'search') {
+  let arrInstanceAnimes = [];
+  let arrSelectedAnime = [];
 
-data = JSON.parse(data);
-
-// Select File
-if (argvInput > data.length) {
-  console.log("id terlalu besar !");
-}
-else if (argvInput < 0 || isNaN(argvInput)) {
-  console.log("id terlalu kecil !");
-}
-else {
-  for (let ctr = 0; ctr < data.length; ctr++) {
-    if (data[ctr].id === argvInput) {
-      animes.push(
-        new Anime(
-          data[ctr].id,
-          data[ctr].season,
-          data[ctr].name,
-          data[ctr].total_episodes,
-          data[ctr].studio
-        )
-      );
-    }
-  };
-
-// Tulis File
-  fs.writeFileSync('./data/ouput.json', JSON.stringify(animes, null, 2), {
+  // Baca File
+  let data = fs.readFileSync('./data/Anime.json', {
     encoding: 'utf8'
   });
 
-  console.log("data berhasil ditulis ke file 'output.json'");
+  data = JSON.parse(data);
+
+  // jadikan ke dalam versi instance (ingat ! oop sudah menyerang !)
+  for (let i = 0; i < data.length; i++) {
+    let instanceAnime = new Anime(
+      data[i].id,
+      data[i].season,
+      data[i].name,
+      data[i].total_episodes,
+      data[i].studio
+    );
+
+    arrInstanceAnimes.push(instanceAnime);
+  }
+
+  // Select File
+  for (let ctr = 0; ctr < arrInstanceAnimes.length; ctr++) {
+    if (arrInstanceAnimes[ctr].id === argvInput) {
+      arrSelectedAnime.push(arrInstanceAnimes[ctr]);
+    }
+  };
+
+  // Tulis File
+  fs.writeFileSync(
+    './data/output.json',
+    JSON.stringify(arrSelectedAnime, null, 2),
+    { encoding: 'utf8' }
+  );
+
+  console.log(`Anime ${arrSelectedAnime[0].name} sudah ditulis ke 'output.json'`);
 }
+else {
+  console.log("command belum diimplementasikan");
+}
+
 // ---------- End of File: index.js
 ```
 
@@ -195,145 +159,85 @@ Sudah terlihat bukan ke-OOP-an dari kode di atas?
 Namun kode ini sepertinya belum terlalu *ciamik* karena belum ada function nya
 sama sekali yah....
 
-Mari kita mengubah logic pada `index.js` di atas sehingga memiliki sebuah
-function utama untuk membaca dan menulis filenya !
-
-#### Code 03:
-```javascript
-// ---------- File: class/Anime.js
-class Anime {
-  constructor(id, season, name, total_episodes, studio) {
-    this.id = id;
-    this.season = season;
-    this.name = name;
-    this.total_episodes = total_episodes;
-    this.studio = studio;
-  }
-}
-
-module.exports = Anime;
-// ---------- End of File: class/Anime.js
-
-// ---------- File: index.js
-const fs = require('fs');
-const Anime = require('./models/Anime.js');
-
-const argvInput = Number(process.argv[2]);
-
-let animes = [];
-
-// Function baca file
-const bacaFile = () => {
-  let data = fs.readFileSync('./data/Anime.json', {
-    encoding: 'utf8'
-  });
-  
-  data = JSON.parse(data);
-
-  return data;
-}
-
-const tulisFile = (animes) => {
-  fs.writeFileSync('./data/ouput.json', JSON.stringify(animes, null, 2), {
-    encoding: 'utf8'
-  });
-
-  console.log("data berhasil ditulis ke file 'output.json'");
-}
-
-// Function select file
-const selectFile = (input) => {
-// Baca File
-  let data = bacaFile();
-
-  if (input > data.length) {
-    console.log("id terlalu besar !");
-  }
-  else if (input < 0 || isNaN(input)) {
-    console.log("id terlalu kecil !");
-  }
-  else {
-    for (let ctr = 0; ctr < data.length; ctr++) {
-      if (data[ctr].id === input) {
-        animes.push(
-          new Anime(
-            data[ctr].id,
-            data[ctr].season,
-            data[ctr].name,
-            data[ctr].total_episodes,
-            data[ctr].studio
-          )
-        );
-      }
-    };
-
-// Tulis file
-    tulisFile(animes);
-  }
-}
-
-// Main Code
-selectFile(argvInput);
-// ---------- End of File: index.js
-```
-
-Nah, setelah kita berhasil membuatnya sampai dengan tahap ini, maka selanjutnya
-kita akan mencoba membuatnya dalam bentuk Model-View-Controller.
+Nah, selanjutnya kita akan mencoba membuatnya dalam bentuk Model-View-Controller.
 
 ### MVC
 Pertama-tama kita akan membuat file `index.js` nya terlebih dahulu,
 file `index.js` ini akan menerima input dari user, kemudian menyerahkannya
 ke `Controller`. 
 
-Dengan asumsi controller kita bernama `AnimeController`, maka:
+Dengan asumsi controller kita bernama `Controller`, maka kita akan membuat kerangka awal pada
+`index.js` sebagai berikut:
 
-#### Code 04:
+#### Code
 ```javascript
 // ---------- File: index.js
-const AnimeController = require('./controllers/AnimeController.js');
+const argv = process.argv;
 
-const argvInput = Number(process.argv[2]);
+const command = argv[2];
+const argvInput = Number(process.argv[3]);
 
-AnimeController.processInput(argvInput);
+if (command === 'search') {
+  // satu command = satu tugas = satu method pada controller
+  // (1) controller untuk handle search
+}
+else {
+  // satu command = satu tugas = satu method pada controller
+  // (2) controller untuk handle not implemented
+}
 // ---------- End of File: index.js
 ```
 
-Setelah itu, kita akan membuat file `AnimeController.js` nya
+Setelah itu, kita akan membuat file `Controller.js` nya
 
 Pertanyaan:
-Apakah di dalam class `AnimeController` ini membutuhkan `constructor`?  
+Apakah di dalam class `Controller` ini membutuhkan `constructor`?  
 Jawabannya adalah:
-**Tidak**, karena di dalam `AnimeController` ini hanya berisi method method
+**Tidak**, karena di dalam `Controller` ini hanya berisi method method
 saja yang akan dipanggil langsung, oleh karena itu jangan lupa `static` yah !
 
-Dengan asumsi nama `Model` yang sudah dibuat ini adalah `Anime`, maka
-
-#### Code 05:
+#### Code
 ```javascript
-// ---------- File: controllers/AnimeController.js
+// ---------- File: controllers/controller.js
 // Jangan lupa panggil model di dalam controller
-const Anime = require('../models/Anime.js');
+class Controller {
+  // handle search dari index.js
+  static searchHandler(input) {
+    // Di sini kita akan berhubungan langsung dengan data bukan?
+    // Karena itu kita akan melemparnya ke model !
 
-class AnimeController {
-  static processInput(input) {
-// Di sini kita akan berhubungan langsung dengan data bukan?
-// Karena itu kita akan melemparnya ke model !
-    Anime.selectFile(input);
+    // selanjutnya kita akan membuat model terlebih dahulu
+  }
+
+  // handle else (not implemented) dari index.js
+  static notImplementedHandler() {
+    // nanti akan kita kerjakan lagi setelah searchHandler selesai
   }
 }
 
 // Jangan lupa export
-module.exports = AnimeController;
-// ---------- End of File: controllers/AnimeController.js
+module.exports = Controller;
+// ---------- End of File: controllers/controller.js
 ```
 
-Kemudian pada file model bernama `Anime` nya yang dibuat adalah:
+Lalu selanjutnya, kita akan membuat bagian pada model.
 
-#### Code 06:
+sesuai dengan struktur data yang kita miliki adalah `Anime`,
+maka kita akan membuat sebuah struktur data model dengan nama `Anime`
+
+Setelah itu kita juga akan membuat sebuah file dengan nama `model.js` yang akan
+menjadi file Model utama kita, yang berguna sebagai domain manipulasi datanya.
+
+Total file yang dibuat adalah:
+- `controller.js` dalam folder `controllers`
+- `anime.js` dalam folder `models`
+- `model.js` dalam folder `models`
+
+Pada file struktur data model bernama `Anime` nya yang dibuat adalah:
+
+#### Code:
 ```javascript
-// ---------- File: models/Anime.js
-const fs = require('fs');
-
+// ---------- File: models/anime.js
 class Anime {
   constructor(id, season, name, total_episodes, studio) {
     this.id = id;
@@ -342,114 +246,122 @@ class Anime {
     this.total_episodes = total_episodes;
     this.studio = studio;
   }
+}
 
-  static bacaFile() {
-  // Ingat bahwa memanggil fs.readFileSync itu bacanya relatif dari
-  // memanggil file utamanya
-    let data = fs.readFileSync('./data/anime.json', {
+module.exports = Anime;
+// ---------- End of File: models/anime.js
+```
+
+Setelah ini barulah kita membuat file `model.js` nya yang bertugas untuk memanipulasi data yang
+ada
+
+### Code:
+```javascript
+// ---------- File: models/model.js
+const fs = require('fs');
+const Anime = require('./anime.js');
+
+class Model {
+  static readAndWrite(id) {
+    let arrInstanceAnimes = [];
+    let arrSelectedAnime = [];
+
+    // Baca File
+    let data = fs.readFileSync('./data/Anime.json', {
       encoding: 'utf8'
     });
 
     data = JSON.parse(data);
 
-    return data;
-  }
+    // jadikan ke dalam versi instance (ingat ! oop sudah menyerang !)
+    for (let i = 0; i < data.length; i++) {
+      let instanceAnime = new Anime(
+        data[i].id,
+        data[i].season,
+        data[i].name,
+        data[i].total_episodes,
+        data[i].studio
+      );
 
-  static tulisFile(animes) {
-    fs.writeFileSync('./data/ouput.json', JSON.stringify(animes, null, 2), {
-      encoding: 'utf8'
-    });
-  
-    return "data berhasil ditulis ke file 'output.json'";
-  }
-
-  static selectFile(input) {
-    let data = this.bacaFile();
-
-    if (input > data.length) {
-      return "id terlalu besar !";
+      arrInstanceAnimes.push(instanceAnime);
     }
-    else if (input < 0 || isNaN(input)) {
-      return "id terlalu kecil !";
-    }
-    else {
-      let animes = [];
-      let result;
 
-      for (let ctr = 0; ctr < data.length; ctr++) {
-        if (data[ctr].id === input) {
+    // Select File
+    for (let ctr = 0; ctr < arrInstanceAnimes.length; ctr++) {
+      if (arrInstanceAnimes[ctr].id === id) {
+        arrSelectedAnime.push(arrInstanceAnimes[ctr]);
+      }
+    };
 
-          animes.push(
-            new Anime(
-              data[ctr].id,
-              data[ctr].season,
-              data[ctr].name,
-              data[ctr].total_episodes,
-              data[ctr].studio
-            )
-          );
-        }
-      };
+    // Tulis File
+    fs.writeFileSync(
+      './data/output.json',
+      JSON.stringify(arrSelectedAnime, null, 2),
+      { encoding: 'utf8' }
+    );
 
-      result = this.tulisFile(animes);
-
-      return result;
-    }
+    return arrSelectedAnime[0];
   }
 }
 
-module.exports = Anime;
-// End of File: models/Anime.js
+module.exports = Model;
+// End of File: models/model.js
 ```
 
 Barulah setelah ini kita memodifikasi file `Controller`nya lagi sehingga
 mau menerima output dari `Model` dan mengirimkannya ke `View`
 
-Asumsi nama `View`-nya adalah `AnimeView.js`
-
-#### Code 07:
+### Code
 ```javascript
-// ---------- File: controllers/AnimeController.js
+// ---------- File: controllers/controller.js
 // Jangan lupa panggil model di dalam controller
-const Anime = require('../models/Anime.js');
-const AnimeView = require('../views/AnimeView.js');
+const Model = require('../models/model.js');
+const View = require('../views/view.js');
 
-class AnimeController {
-  static processInput(input) {
-// Di sini kita akan berhubungan langsung dengan data bukan?
-// Karena itu kita akan melemparnya ke model !
+class Controller {
+  // handle search dari index.js
+  static searchHandler(input) {
+    // Di sini kita akan berhubungan langsung dengan data bukan?
+    // Karena itu kita akan melemparnya ke model !
 
-// Jangan lupa setelah menerima hasil dari model,
-// Kemudian akan dilempar ke View untuk dijadikan output kepada user ! 
-    let result = Anime.selectFile(input);
-    
+    // Jangan lupa setelah menerima hasil dari model,
+    // Kemudian akan dilempar ke View untuk dijadikan output kepada user ! 
+    let result = Model.readAndWrite(input);
+
     // Nah pada saat ini, kita tidak bisa memilih 
     // apakah error, atau success ?
     // sehingga kita hanya menggunakan showSuccess saja
-    AnimeView.showSuccess(result);
+    View.showSuccess(result);
+  }
+
+  // handle else (not implemented) dari index.js
+  static notImplementedHandler() {
+    View.showNotImplemented();
   }
 }
 
 // Jangan lupa export
-module.exports = AnimeController;
-// End of File: controllers/AnimeController.js
+module.exports = Controller;
+// ---------- End of File: controllers/controller.js
 ```
 
-#### Code 08:
+Asumsi nama `View`-nya adalah `View.js`
+
+#### Code:
 ```Javascript
-// ---------- File: views/AnimeView.js
-class AnimeView {
-  static showError(output) {
-    console.log(`Error: ${output}`);
+// ---------- File: views/view.js
+class View {
+  static showSuccess(output) {
+    console.log(`Anime ${output.name} sudah ditulis ke 'output.json'`);
   }
 
-  static showSuccess(output) {
-    console.log(`Success: ${output}`);
+  static showNotImplemented() {
+    console.log("command belum diimplementasikan");
   }
 }
 
-module.exports = AnimeView;
-// ---------- End of File: views/AnimeView.js
+module.exports = View;
+// ---------- End of File: views/view.js
 ```
 
 🔥 Selamat ! 🔥  
